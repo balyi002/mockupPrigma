@@ -1,0 +1,37 @@
+Alcance:�
+
+Funcionalidad Aplicativo Web
+
+Proceso de Configuraci�n
+* Subproceso de roles: este subproceso permitir� registrar, consultar, actualizar y cambiar el estado de los roles con los respectivos permisos asociados para tener acceso a los procesos y su funcionalidad, dentro del aplicativo.
+* Subproceso de permisos (si aplica): este Subproceso permitir� registrar, consultar y actualizar los permisos.
+Proceso de Usuarios
+* Subproceso de gesti�n de usuarios: este Subproceso permitir� registrar, consultar, editar y cambiar el estado de la informaci�n de los usuarios y la generaci�n de reportes.
+* Subproceso de gesti�n de acceso: este Subproceso permitir� ingresar el login, recuperar y restablecer la contrase�a y cerrar sesi�n.�
+
+Proceso de compra
+* Subproceso gesti�n de categor�as de productos: Este Subproceso permitir� registrar, consultar,� editar y cambiar estado la informaci�n de la categor�a de los productos.
+
+
+* �Subproceso gesti�n de productos: Este Subproceso permitir� registrar, consultar,� editar, cambiar estado de la informaci�n de los productos, el control de las existencias, la valoraci�n del producto, la generaci�n de reportes y la actualizaci�n del stock de acuerdo con las compras.
+
+
+* Subproceso de gesti�n de proveedores: Este Subproceso permitir� registrar, consultar,� editar, cambiar estado de la informaci�n de los proveedores. Un proveedor no podr� ser inhabilitado si tiene asociados registros de compras dentro del aplicativo.
+* Proceso gesti�n de compras: Este Subproceso permitir� registrar, consultar, editar y cambiar de estado las compras realizadas a los proveedores, asociando cada compra con los productos, cantidades y costos correspondientes. Al registrar una compra, el stock de los productos asociados se actualizar� autom�ticamente. Adem�s, se permitir� la generaci�n de reportes.
+Proceso de Servicios
+* Subproceso gesti�n de categor�as de servicios: Este Subproceso permitir� registrar, consultar, editar, cambiar estado de las categor�as de servicios prestados por el negocio. Una categor�a no podr� ser inhabilitada si tiene servicios activos asociados.
+* Proceso gesti�n de servicios: Este Subproceso permitir� registrar, consultar, editar, cambiar estado de la informaci�n de los servicios ofrecidos por Variedades Carito y la generaci�n de reportes. Para cada servicio se establecer� la categor�a, precio, unidad de cobro e insumos, de modo que al registrar una prestaci�n del servicio se descuentan autom�ticamente del stock, los productos utilizados. Un servicio no podr� ser inhabilitado si tiene registros asociados.
+* Subproceso gesti�n de empleados: Este Subproceso permitir� registrar, consultar, editar, cambiar estado la informaci�n de los empleados y generaci�n de reportes, asignando sus datos personales, de contacto y el rol correspondiente. Un empleado no podr� ser inhabilitado si tiene ventas, transacciones (como recargas de Gana), cierres de caja o turnos activos asociados a su perfil, garantizando as� la trazabilidad de las operaciones financieras del local.
+* Subproceso gesti�n de agenda de empleados: Este Subproceso permitir� registrar, consultar, editar la programaci�n de los turnos de los empleados de mostrador encargados de prestar los servicios, garantizando la atenci�n continua durante el horario del local.
+Proceso de venta
+* Subproceso gesti�n de pedidos: Este Subproceso permitir� consultar, ver detalles, cambiar el estado de los pedidos hasta el pago y la entrega al cliente, de esta manera convirti�ndose en una venta. Un pedido no podr� ser inhabilitado, solo anulado en el caso de que se requiera; con su respectiva justificaci�n. Al crear un pedido los stocks de este tipo de producto se disminuir�n y cuando se anule se incrementar� el stock de los productos asociados. Adem�s, se permitir� la impresi�n de cada pedido y la generaci�n de reportes.
+
+
+* Subproceso gesti�n de clientes: Este Subproceso permitir� consultar la informaci�n de los clientes.
+
+
+* Subproceso gesti�n de ventas: Este Subproceso permitir� registrar, consultar, ver detalles, cambiar estado la informaci�n de las ventas, as� como los productos asociados a la misma, en el caso de que se requiera, anular la venta, con su respectiva justificaci�n, teniendo en cuenta las pol�ticas definidas por la empresa. El registro de una venta disminuir� autom�ticamente los stocks de los productos asociados a ella, y de igual manera, al anular una venta se incrementar�n nuevamente los stocks correspondientes. Tambi�n se permitir� la impresi�n de cada venta al igual que la generaci�n de reportes.
+
+Proceso de medici�n y desempe�o
+* Este Proceso permitir� monitorear y evaluar el desempe�o de Variedades Carito mediante indicadores estad�sticos y gr�ficas sobre ventas por d�a, semana, mes y a�o, productos m�s vendidos. Su prop�sito es apoyar la toma de decisiones estrat�gicas y promover la mejora continua de los servicios y productos del negocio. 
+
