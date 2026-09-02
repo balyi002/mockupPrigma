@@ -819,7 +819,7 @@ function DashboardView({ sales, orders }: { sales: Sale[]; orders: Order[] }) {
         <div className="lg:col-span-2 bg-card rounded-2xl p-5 shadow-sm border border-border">
           <div className="flex items-center justify-between mb-4">
             <h3 className="font-black text-sm">Ventas Semana Actual</h3>
-            <span className="bg-muted text-muted-foreground text-xs font-bold px-2 py-1 rounded-lg">2026</span>
+            <span className="bg-muted text-muted-foreground text-xs font-bold px-2 py-1 rounded-lg">{MONTHS_ES[filterWeekStart.getMonth()]} {filterWeekStart.getFullYear()}</span>
           </div>
           <ResponsiveContainer width="100%" height={220}>
             <ReBarChart data={weekSalesData.map((d, i) => {
@@ -1718,7 +1718,7 @@ function PurchasesView({ purchases, setPurchases, suppliers, isMobile = false }:
             </div>
             <div className="space-y-2">
               <div className="grid grid-cols-[1fr_72px_88px_32px] gap-2 text-xs font-black uppercase tracking-wide text-muted-foreground px-1">
-                <span>Producto</span><span>Cant.</span><span>Costo</span><span />
+                <span></span><span>Cant.</span><span>Costo</span><span />
               </div>
               {form.items.map((item: any, i: number) => (
                 <div key={i} className="grid grid-cols-[1fr_72px_88px_32px] gap-2 items-center">
