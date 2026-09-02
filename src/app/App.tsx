@@ -96,9 +96,9 @@ const toast = {
 // ─── Mock Data ───────────────────────────────────────────────────────────────
 const initRoles = [
   { id: 'ROL001', name: 'Administrador', desc: 'Control total del sistema', status: 'activo',
-    perms: { Dashboard: true, Roles: true, 'Gestión de Usuarios': true, Categorías: true, 'Gestión de Productos': true, Proveedores: true, 'Gestión de Compras': true, 'Categorías de Servicios': true, 'Gestión de Servicios': true, Empleados: true, Agenda: true, Pedidos: true, Clientes: true, Ventas: true } },
+    perms: { Dashboard: true, Roles: true, 'Gestión de Usuarios': true, 'Categoría de Productos': true, 'Gestión de Productos': true, Proveedores: true, 'Gestión de Compras': true, 'Categoría de Servicios': true, 'Gestión de Servicios': true, Empleados: true, Agenda: true, Pedidos: true, Clientes: true, Ventas: true } },
   { id: 'ROL002', name: 'Empleado', desc: 'Operación diaria de tienda', status: 'activo',
-    perms: { Dashboard: false, Roles: false, 'Gestión de Usuarios': false, Categorías: false, 'Gestión de Productos': false, Proveedores: false, 'Gestión de Compras': false, 'Categorías de Servicios': false, 'Gestión de Servicios': false, Empleados: false, Agenda: false, Pedidos: true, Clientes: true, Ventas: true } },
+    perms: { Dashboard: false, Roles: false, 'Gestión de Usuarios': false, 'Categoría de Productos': false, 'Gestión de Productos': false, Proveedores: false, 'Gestión de Compras': false, 'Categoría de Servicios': false, 'Gestión de Servicios': false, Empleados: false, Agenda: false, Pedidos: true, Clientes: true, Ventas: true } },
 ];
 
 const initUsers = [
@@ -267,13 +267,13 @@ const navItems: NavItem[] = [
     { id: 'users', label: 'Gestión de Usuarios', icon: Users },
   ]},
   { id: 'compras', label: 'COMPRAS', icon: Package, children: [
-    { id: 'buy-categories', label: 'Categorías', icon: Tag },
+    { id: 'buy-categories', label: 'Categoría de Productos', icon: Tag },
     { id: 'products',       label: 'Gestión de Productos', icon: Package2 },
     { id: 'suppliers',      label: 'Proveedores', icon: Truck },
     { id: 'purchases',      label: 'Gestión de Compras', icon: DollarSign },
   ]},
   { id: 'servicios', label: 'SERVICIOS', icon: Briefcase, children: [
-    { id: 'service-categories', label: 'Categorías de Servicios', icon: Tag },
+    { id: 'service-categories', label: 'Categoría de Servicios', icon: Tag },
     { id: 'services',           label: 'Gestión de Servicios', icon: Star },
     { id: 'employees',          label: 'Empleados', icon: Users },
     { id: 'agenda',             label: 'Agenda', icon: Clock },
@@ -1352,7 +1352,7 @@ function BuyCategoriesView({ categories, setCategories, products }: { categories
     <div className="space-y-4">
       {confirmEl}{alertEl}
       <div className="flex items-center justify-between">
-        <h2 className="font-black text-lg">Categorías de Compra</h2>
+        <h2 className="font-black text-lg">Categoría de Productos</h2>
         <button onClick={() => { setEditItem(null); setForm(blankForm); setNameErr(''); setIsOpen(true); }} className="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-xl text-sm font-bold hover:opacity-90"><Plus className="w-4 h-4" /> Nueva</button>
       </div>
       <div className="relative"><Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" /><input value={search} onChange={e => { setSearch(e.target.value); setPage(1); }} placeholder="Buscar categoría..." className={`${iCls} pl-9`} /></div>
@@ -1511,10 +1511,27 @@ function PurchasesView({ purchases, setPurchases, suppliers, isMobile = false }:
   const [page, setPage]           = useState(1);
   const [isOpen, setIsOpen]       = useState(false);
   const [detailOpen, setDetailOpen] = useState<Purchase | null>(null);
+  const [editItem, setEditItem]   = useState<any>(null);
   const blankForm = { proveedor: '', proveedorNit: '', status: 'Pendiente', fecha: '', notas: '', items: [{ name: '', qty: '1', cost: '' }] as any[] };
   const [form, setForm]           = useState(blankForm);
   const { warn, el: alertEl }     = useAlert();
   const purchaseStatusOptions     = ['Pendiente', 'Pagado', 'Cancelado'];
+
+  const isEditing = !!editItem;
+
+  const openEdit = (p: any) => {
+    setEditItem(p);
+    const [d, m, y] = p.fecha.split('/');
+    setForm({
+      proveedor: p.proveedor,
+      proveedorNit: p.proveedorNit || '',
+      fecha: `${y}-${m}-${d}`,
+      items: p.items.map((i: any) => ({ ...i, qty: String(i.qty), cost: String(i.cost) })),
+      notas: p.notas || '',
+      status: p.status || 'Pendiente'
+    });
+    setIsOpen(true);
+  };
 
   const handlePurchaseStatus = (id: string, newStatus: string) => {
     setPurchases(prev => prev.map(p => p.id === id ? { ...p, status: newStatus } : p));
@@ -1546,10 +1563,15 @@ function PurchasesView({ purchases, setPurchases, suppliers, isMobile = false }:
     const total  = items.reduce((s, i) => s + i.qty * i.cost, 0);
     const [y, m, d] = form.fecha.split('-');
     const fecha  = `${d}/${m}/${y}`;
-    const id     = `COM${String(purchases.length + 1).padStart(3, '0')}`;
-    setPurchases(prev => [{ id, fecha, proveedor: form.proveedor, proveedorNit: form.proveedorNit, items, total, notas: form.notas, status: form.status }, ...prev]);
-    toast.success('Compra registrada.');
-    setIsOpen(false); setForm(blankForm); setPage(1);
+    if (isEditing) {
+      setPurchases(prev => prev.map(p => p.id === editItem.id ? { ...p, fecha, proveedor: form.proveedor, proveedorNit: form.proveedorNit, items, total, notas: form.notas, status: form.status } : p));
+      toast.success('Compra actualizada.');
+    } else {
+      const id     = `COM${String(purchases.length + 1).padStart(3, '0')}`;
+      setPurchases(prev => [{ id, fecha, proveedor: form.proveedor, proveedorNit: form.proveedorNit, items, total, notas: form.notas, status: form.status }, ...prev]);
+      toast.success('Compra registrada.');
+    }
+    setIsOpen(false); setForm(blankForm); setPage(1); setEditItem(null);
   };
 
   const totalGasto = purchases.reduce((s, p) => s + p.total, 0);
@@ -1562,7 +1584,7 @@ function PurchasesView({ purchases, setPurchases, suppliers, isMobile = false }:
           <h2 className="font-black text-lg">Gestión de Compras</h2>
           <p className="text-xs text-muted-foreground">Registro de compras realizadas a proveedores</p>
         </div>
-        {!isMobile && <button onClick={() => { setForm(blankForm); setIsOpen(true); }} className="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-xl text-sm font-bold hover:opacity-90"><Plus className="w-4 h-4" /> Nueva Compra</button>}
+        {!isMobile && <button onClick={() => { setForm(blankForm); setEditItem(null); setIsOpen(true); }} className="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-xl text-sm font-bold hover:opacity-90"><Plus className="w-4 h-4" /> Nueva Compra</button>}
       </div>
 
       <div className={`grid gap-4 ${isMobile ? 'grid-cols-2' : 'grid-cols-3'}`}>
@@ -1597,6 +1619,7 @@ function PurchasesView({ purchases, setPurchases, suppliers, isMobile = false }:
                 <span className="font-black text-primary">{formatCOP(p.total)}</span>
                 <div className="flex items-center gap-2">
                   {p.status && <InlineStatusSelect value={p.status} options={purchaseStatusOptions} onChange={s => handlePurchaseStatus(p.id, s)} />}
+                  <button onClick={() => openEdit(p)} className="p-3 rounded-xl bg-primary/10 text-primary"><Edit2 className="w-4 h-4" /></button>
                   <button onClick={() => setDetailOpen(p)} className="p-3 rounded-xl bg-blue-50 text-blue-500"><Eye className="w-4 h-4" /></button>
                 </div>
               </div>
@@ -1606,7 +1629,7 @@ function PurchasesView({ purchases, setPurchases, suppliers, isMobile = false }:
         </div>
       ) : (
         <TableWrapper>
-          <thead><tr><Th>ID</Th><Th>Proveedor</Th><Th>Fecha</Th><Th>Productos</Th><Th right>Total</Th><Th>Estado</Th><Th>Ver</Th></tr></thead>
+          <thead><tr><Th>ID</Th><Th>Proveedor</Th><Th>Fecha</Th><Th>Productos</Th><Th right>Total</Th><Th>Estado</Th><Th>Acciones</Th></tr></thead>
           <tbody>
             {paged.map(p => (
               <tr key={p.id} className="hover:bg-muted/20">
@@ -1623,7 +1646,12 @@ function PurchasesView({ purchases, setPurchases, suppliers, isMobile = false }:
                     <InlineStatusSelect value={p.status} options={purchaseStatusOptions} onChange={s => handlePurchaseStatus(p.id, s)} />
                   ) : <span className="text-xs text-muted-foreground">—</span>}
                 </Td>
-                <Td><button onClick={() => setDetailOpen(p)} className="w-8 h-8 rounded-lg hover:bg-blue-50 flex items-center justify-center text-blue-500"><Eye className="w-3.5 h-3.5" /></button></Td>
+                <Td>
+                  <div className="flex items-center gap-2 justify-center">
+                    <button onClick={() => openEdit(p)} className="w-8 h-8 rounded-lg hover:bg-primary/10 flex items-center justify-center text-primary"><Edit2 className="w-3.5 h-3.5" /></button>
+                    <button onClick={() => setDetailOpen(p)} className="w-8 h-8 rounded-lg hover:bg-blue-50 flex items-center justify-center text-blue-500"><Eye className="w-3.5 h-3.5" /></button>
+                  </div>
+                </Td>
               </tr>
             ))}
           </tbody>
@@ -1659,7 +1687,7 @@ function PurchasesView({ purchases, setPurchases, suppliers, isMobile = false }:
       )}
 
       {/* New Purchase Modal */}
-      <Modal open={isOpen} onClose={() => { setIsOpen(false); setForm(blankForm); }} title="Nueva Compra" wide>
+      <Modal open={isOpen} onClose={() => { setIsOpen(false); setForm(blankForm); setEditItem(null); }} title={isEditing ? 'Editar Compra' : 'Nueva Compra'} wide>
         <div className="space-y-4">
           <div className="grid grid-cols-2 gap-3">
             <FF label="Proveedor *">
@@ -1708,7 +1736,7 @@ function PurchasesView({ purchases, setPurchases, suppliers, isMobile = false }:
             )}
           </div>
           <FF label="Notas"><input value={form.notas} onChange={e => setForm(f => ({ ...f, notas: e.target.value }))} maxLength={80} placeholder="Observaciones (opcional)" className={iCls} /></FF>
-          <ModalActions onCancel={() => { setIsOpen(false); setForm(blankForm); }} onSave={handleSave} saveLabel="Registrar Compra" />
+          <ModalActions onCancel={() => { setIsOpen(false); setForm(blankForm); setEditItem(null); }} onSave={handleSave} saveLabel={isEditing ? 'Actualizar Compra' : 'Registrar Compra'} />
         </div>
       </Modal>
     </div>
@@ -1767,7 +1795,7 @@ function ServiceCategoriesView({ categories, setCategories, services }: { catego
     <div className="space-y-4">
       {confirmEl}{alertEl}
       <div className="flex items-center justify-between">
-        <h2 className="font-black text-lg">Categorías de Servicios</h2>
+        <h2 className="font-black text-lg">Categoría de Servicios</h2>
         <button onClick={() => { setEditItem(null); setForm(blankForm); setNameErr(''); setIsOpen(true); }} className="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-xl text-sm font-bold hover:opacity-90"><Plus className="w-4 h-4" /> Nueva</button>
       </div>
       <div className="relative"><Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" /><input value={search} onChange={e => { setSearch(e.target.value); setPage(1); }} placeholder="Buscar categoría..." className={`${iCls} pl-9`} /></div>
@@ -2865,23 +2893,21 @@ function RolesView({ roles, setRoles }: { roles: any[]; setRoles: any }) {
   const [nameErr, setNameErr]     = useState('');
   const { ask, el: confirmEl }    = useConfirm();
 
-  const allPerms = ['Dashboard', 'Roles', 'Gestión de Usuarios', 'Categorías', 'Gestión de Productos', 'Proveedores', 'Gestión de Compras', 'Categorías de Servicios', 'Gestión de Servicios', 'Empleados', 'Agenda', 'Pedidos', 'Clientes', 'Ventas'];
+  const allPerms = ['Dashboard', 'Roles', 'Gestión de Usuarios', 'Categoría de Productos', 'Gestión de Productos', 'Proveedores', 'Gestión de Compras', 'Categoría de Servicios', 'Gestión de Servicios', 'Empleados', 'Agenda', 'Pedidos', 'Clientes', 'Ventas'];
 
   const permPrivileges: Record<string, string[]> = {
-    'Proveedores': ['Crear', 'Editar', 'Cambiar Estado'],
-    'Roles': ['Crear', 'Editar', 'Cambiar Estado'],
-    'Gestión de Usuarios': ['Crear', 'Editar', 'Cambiar Estado'],
-    'Categorías': ['Crear', 'Editar', 'Eliminar'],
-    'Gestión de Productos': ['Crear', 'Editar', 'Eliminar'],
-    'Gestión de Compras': ['Crear', 'Anular'],
-    'Categorías de Servicios': ['Crear', 'Editar', 'Eliminar'],
-    'Gestión de Servicios': ['Crear', 'Editar', 'Eliminar'],
-    'Empleados': ['Crear', 'Editar', 'Cambiar Estado'],
-    'Agenda': ['Crear Cita', 'Cancelar Cita', 'Reagendar'],
-    'Pedidos': ['Crear', 'Cambiar Estado', 'Convertir a Venta'],
-    'Clientes': ['Crear', 'Editar', 'Exportar'],
-    'Ventas': ['Crear', 'Anular', 'Exportar'],
-    'Dashboard': ['Ver Gráficos', 'Exportar Reportes']
+    'Roles': ['Crear', 'Editar', 'Cambiar de Estado'],
+    'Gestión de Usuarios': ['Crear', 'Editar', 'Cambiar de Estado'],
+    'Categoría de Productos': ['Crear', 'Editar', 'Cambiar de Estado'],
+    'Gestión de Productos': ['Crear', 'Editar', 'Cambiar de Estado'],
+    'Proveedores': ['Crear', 'Editar', 'Cambiar de Estado'],
+    'Gestión de Compras': ['Crear', 'Editar', 'Cambiar de Estado'],
+    'Categoría de Servicios': ['Crear', 'Editar', 'Cambiar de Estado'],
+    'Gestión de Servicios': ['Crear', 'Editar', 'Cambiar de Estado'],
+    'Empleados': ['Editar', 'Cambiar de Estado'],
+    'Agenda': ['Crear', 'Editar'],
+    'Pedidos': ['Crear', 'Cambiar de Estado'],
+    'Ventas': ['Cambiar de Estado']
   };
 
   const toggleRoleStatus = (role: any) => {
