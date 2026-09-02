@@ -38,8 +38,8 @@ function useLocalStorage<T>(key: string, initialValue: T) {
 
 // ─── Types ──────────────────────────────────────────────────────────────────
 type TxItem      = { name: string; qty: number; price: number };
-type Sale        = { id: string; fecha: string; hora: string; cliente: string; items: TxItem[]; subtotal: number; iva: number; total: number; metodoPago: 'Efectivo'|'Transferencia'; estado: string; justificacion?: string };
-type Order       = { id: string; fecha: string; hora: string; cliente: string; items: TxItem[]; subtotal: number; iva: number; total: number; metodoPago: 'Efectivo'|'Transferencia'; estado: string };
+type Sale        = { id: string; fecha: string; hora: string; cliente: string; documento?: string; items: TxItem[]; subtotal: number; iva: number; total: number; metodoPago: 'Efectivo'|'Transferencia'; estado: string; justificacion?: string };
+type Order       = { id: string; fecha: string; hora: string; cliente: string; documento?: string; items: TxItem[]; subtotal: number; iva: number; total: number; metodoPago: 'Efectivo'|'Transferencia'; estado: string };
 type Client      = { id: string; nombre: string; cantidadCompras: number; totalGastado: number; ultimaCompra: string; documento?: string };
 type PurchaseRow = { name: string; qty: number; cost: number };
 type Purchase    = { id: string; fecha: string; proveedor: string; proveedorNit?: string; items: PurchaseRow[]; total: number; notas: string; status: string };
@@ -505,6 +505,7 @@ function TransactionDetailModal({ tx, onClose, onPrint }: { tx: Sale | Order | n
       <div className="space-y-4">
         <div className="grid grid-cols-2 gap-3 text-sm bg-muted/30 rounded-xl p-4">
           <div><span className="text-muted-foreground">Cliente:</span> <span className="font-bold">{tx.cliente}</span></div>
+          <div><span className="text-muted-foreground">Documento:</span> <span className="font-bold">{tx.documento || '—'}</span></div>
           <div><span className="text-muted-foreground">Fecha:</span> <span className="font-bold">{tx.fecha} {tx.hora}</span></div>
           <div><span className="text-muted-foreground">Método:</span> <span className="font-bold">{tx.metodoPago}</span></div>
           <div><span className="text-muted-foreground">Estado:</span> <StatusBadge status={tx.estado} /></div>
@@ -957,12 +958,18 @@ function POSView({ sales, setSales, orders, setOrders, clients, setClients }: {
     const items: TxItem[] = cart.map(x => ({ name: x.product.name, qty: x.qty, price: x.product.price }));
     const nombre = checkoutClient.trim();
 
+    let doc = checkoutDocumento.trim() || undefined;
+    if (!doc) {
+      const existingClient = clients.find(c => c.nombre.toLowerCase() === nombre.toLowerCase());
+      if (existingClient?.documento) doc = existingClient.documento;
+    }
+
     if (checkoutStatus === 'completado') {
       const id = `VTA${String(sales.length + 1).padStart(3, '0')}`;
-      setSales(prev => [{ id, fecha, hora, cliente: nombre, items, subtotal, iva, total, metodoPago: checkoutMethod, estado: 'completado' }, ...prev]);
+      setSales(prev => [{ id, fecha, hora, cliente: nombre, documento: doc, items, subtotal, iva, total, metodoPago: checkoutMethod, estado: 'completado' }, ...prev]);
     } else {
       const id = `PED${String(orders.length + 1).padStart(3, '0')}`;
-      setOrders(prev => [{ id, fecha, hora, cliente: nombre, items, subtotal, iva, total, metodoPago: checkoutMethod, estado: checkoutStatus }, ...prev]);
+      setOrders(prev => [{ id, fecha, hora, cliente: nombre, documento: doc, items, subtotal, iva, total, metodoPago: checkoutMethod, estado: checkoutStatus }, ...prev]);
     }
 
     setClients(prev => {
@@ -1064,17 +1071,26 @@ function POSView({ sales, setSales, orders, setOrders, clients, setClients }: {
           {/* Items a cobrar */}
           <div>
             <p className="text-xs font-black uppercase tracking-wide text-muted-foreground mb-2">Productos a cobrar ({cart.length})</p>
-            <div className="rounded-xl border border-border divide-y divide-border max-h-40 overflow-y-auto">
-              {cart.map(item => (
-                <div key={item.product.id} className="flex items-center justify-between px-3 py-2 text-sm">
-                  <div className="flex items-center gap-2 min-w-0">
-                    <span>{item.product.emoji}</span>
-                    <span className="font-bold truncate">{item.product.name}</span>
-                    <span className="text-muted-foreground text-xs flex-shrink-0">×{item.qty}</span>
+            <div className="rounded-xl border border-border divide-y divide-border">
+              <div className="flex items-center px-3 py-2 bg-muted/50 text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
+                <div className="flex-1">Artículo</div>
+                <div className="w-12 text-center">Cant.</div>
+                <div className="w-20 text-right">P. Unit.</div>
+                <div className="w-24 text-right">Subtotal</div>
+              </div>
+              <div className="max-h-40 overflow-y-auto divide-y divide-border block w-full">
+                {cart.map(item => (
+                  <div key={item.product.id} className="flex items-center px-3 py-2 text-sm">
+                    <div className="flex-1 flex items-center gap-2 min-w-0">
+                      <span>{item.product.emoji}</span>
+                      <span className="font-bold truncate">{item.product.name}</span>
+                    </div>
+                    <div className="w-12 text-center text-muted-foreground text-xs">{item.qty}</div>
+                    <div className="w-20 text-right text-muted-foreground text-xs">{formatCOP(item.product.price)}</div>
+                    <div className="w-24 text-right font-black text-primary">{formatCOP(item.product.price * item.qty)}</div>
                   </div>
-                  <span className="font-black text-primary flex-shrink-0 ml-2">{formatCOP(item.product.price * item.qty)}</span>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
 
@@ -1371,7 +1387,7 @@ function SuppliersView({ suppliers, setSuppliers }: { suppliers: any[]; setSuppl
   const [page, setPage]         = useState(1);
   const [isOpen, setIsOpen]     = useState(false);
   const [editItem, setEditItem] = useState<any>(null);
-  const blankForm = { name: '', tipoProveedor: 'Natural', tipoDocumento: 'CC', nit: '', contact: '', phone: '', category: '', status: 'activo' };
+  const blankForm = { name: '', tipoProveedor: 'Natural', tipoDocumento: 'CC', nit: '', contact: '', phone: '', email: '', category: '', status: 'activo' };
   const [form, setForm]         = useState(blankForm);
   const [nameErr, setNameErr]   = useState('');
   const { ask, el: confirmEl }  = useConfirm();
@@ -1384,7 +1400,7 @@ function SuppliersView({ suppliers, setSuppliers }: { suppliers: any[]; setSuppl
   const pages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
   const paged = filtered.slice((page - 1) * ITEMS_PER_PAGE, page * ITEMS_PER_PAGE);
 
-  const openEdit  = (item: any) => { setEditItem(item); setForm({ name: item.name, tipoProveedor: item.tipoProveedor || 'Juridico', tipoDocumento: item.tipoDocumento || 'NIT', nit: item.nit || '', contact: item.contact, phone: item.phone, category: item.category, status: item.status }); setNameErr(''); setIsOpen(true); };
+  const openEdit  = (item: any) => { setEditItem(item); setForm({ name: item.name, tipoProveedor: item.tipoProveedor || 'Juridico', tipoDocumento: item.tipoDocumento || 'NIT', nit: item.nit || '', contact: item.contact, phone: item.phone, email: item.email || '', category: item.category, status: item.status }); setNameErr(''); setIsOpen(true); };
   const closeModal = () => { setIsOpen(false); setEditItem(null); setForm(blankForm); setNameErr(''); };
 
   const handleSave = () => {
@@ -1477,8 +1493,9 @@ function SuppliersView({ suppliers, setSuppliers }: { suppliers: any[]; setSuppl
           )}
           <FF label={form.tipoProveedor === 'Juridico' ? "Razón Social *" : "Nombre del Proveedor *"} err={nameErr}><input value={form.name} onChange={e => { setForm(f => ({ ...f, name: e.target.value })); setNameErr(''); }} maxLength={40} className={iCls} /></FF>
           <FF label="Contacto"><input value={form.contact} onChange={e => setForm(f => ({ ...f, contact: e.target.value }))} maxLength={30} className={iCls} /></FF>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-3 gap-3">
             <FF label="Teléfono"><input value={form.phone} onChange={e => setForm(f => ({ ...f, phone: e.target.value }))} maxLength={15} className={iCls} /></FF>
+            <FF label="Correo"><input value={form.email} onChange={e => setForm(f => ({ ...f, email: e.target.value }))} maxLength={60} type="email" placeholder="correo@ejemplo.com" className={iCls} /></FF>
             <FF label="Categoría"><input value={form.category} onChange={e => setForm(f => ({ ...f, category: e.target.value }))} maxLength={20} className={iCls} /></FF>
           </div>
           <ModalActions onCancel={closeModal} onSave={handleSave} saveLabel={isEditing ? 'Actualizar' : 'Crear'} />
@@ -2394,6 +2411,7 @@ function OrdersView({ orders, setOrders, setSales, setClients, onNuevoPedido }: 
           <div className="space-y-4">
             <div className="grid grid-cols-2 gap-3 text-sm bg-muted/30 rounded-xl p-4">
               <div><span className="text-muted-foreground">Cliente:</span> <span className="font-bold">{detailOrder.cliente}</span></div>
+              <div><span className="text-muted-foreground">Documento:</span> <span className="font-bold">{detailOrder.documento || '—'}</span></div>
               <div><span className="text-muted-foreground">Fecha:</span> <span className="font-bold">{detailOrder.fecha} {detailOrder.hora}</span></div>
               <div><span className="text-muted-foreground">Método:</span> <span className="font-bold">{detailOrder.metodoPago}</span></div>
               <div><span className="text-muted-foreground">Estado:</span> <StatusBadge status={detailOrder.estado} /></div>
@@ -2843,19 +2861,36 @@ function UsersView({ users, setUsers }: { users: any[]; setUsers: any }) {
 function RolesView({ roles, setRoles }: { roles: any[]; setRoles: any }) {
   const [editItem, setEditItem]   = useState<any>(null);
   const [isNewOpen, setIsNewOpen] = useState(false);
-  const [form, setForm]           = useState({ name: '', desc: '', status: 'activo', perms: {} as Record<string, boolean> });
+  const [form, setForm]           = useState({ name: '', desc: '', status: 'activo', perms: {} as Record<string, boolean>, privs: {} as Record<string, string[]> });
   const [nameErr, setNameErr]     = useState('');
   const { ask, el: confirmEl }    = useConfirm();
 
   const allPerms = ['Dashboard', 'Roles', 'Gestión de Usuarios', 'Categorías', 'Gestión de Productos', 'Proveedores', 'Gestión de Compras', 'Categorías de Servicios', 'Gestión de Servicios', 'Empleados', 'Agenda', 'Pedidos', 'Clientes', 'Ventas'];
 
+  const permPrivileges: Record<string, string[]> = {
+    'Proveedores': ['Crear', 'Editar', 'Cambiar Estado'],
+    'Roles': ['Crear', 'Editar', 'Cambiar Estado'],
+    'Gestión de Usuarios': ['Crear', 'Editar', 'Cambiar Estado'],
+    'Categorías': ['Crear', 'Editar', 'Eliminar'],
+    'Gestión de Productos': ['Crear', 'Editar', 'Eliminar'],
+    'Gestión de Compras': ['Crear', 'Anular'],
+    'Categorías de Servicios': ['Crear', 'Editar', 'Eliminar'],
+    'Gestión de Servicios': ['Crear', 'Editar', 'Eliminar'],
+    'Empleados': ['Crear', 'Editar', 'Cambiar Estado'],
+    'Agenda': ['Crear Cita', 'Cancelar Cita', 'Reagendar'],
+    'Pedidos': ['Crear', 'Cambiar Estado', 'Convertir a Venta'],
+    'Clientes': ['Crear', 'Editar', 'Exportar'],
+    'Ventas': ['Crear', 'Anular', 'Exportar'],
+    'Dashboard': ['Ver Gráficos', 'Exportar Reportes']
+  };
+
   const toggleRoleStatus = (role: any) => {
     setRoles((prev: any[]) => prev.map((r: any) => r.id === role.id ? { ...r, status: r.status === 'activo' ? 'inactivo' : 'activo' } : r));
     toast.success(`Rol "${role.name}" ${role.status === 'activo' ? 'desactivado' : 'activado'}.`);
   };
-  const blankForm = { name: '', desc: '', status: 'activo', perms: {} as Record<string, boolean> };
+  const blankForm = { name: '', desc: '', status: 'activo', perms: {} as Record<string, boolean>, privs: {} as Record<string, string[]> };
 
-  const openEdit = (role: any) => { setEditItem(role); setForm({ name: role.name, desc: role.desc, status: role.status, perms: { ...role.perms } }); setNameErr(''); };
+  const openEdit = (role: any) => { setEditItem(role); setForm({ name: role.name, desc: role.desc, status: role.status, perms: { ...role.perms }, privs: { ...(role.privs || {}) } }); setNameErr(''); setIsNewOpen(true); };
   const closeModal = () => { setEditItem(null); setIsNewOpen(false); setForm(blankForm); setNameErr(''); };
 
   const handleSave = () => {
@@ -2868,7 +2903,7 @@ function RolesView({ roles, setRoles }: { roles: any[]; setRoles: any }) {
       closeModal();
     } else {
       ask(`¿Guardar cambios al rol "${editItem.name}"?`, () => {
-        setRoles((prev: any[]) => prev.map((r: any) => r.id === editItem.id ? { ...r, desc: form.desc, status: form.status, perms: form.perms } : r));
+        setRoles((prev: any[]) => prev.map((r: any) => r.id === editItem.id ? { ...r, desc: form.desc, status: form.status, perms: form.perms, privs: form.privs } : r));
         toast.success('Rol actualizado.');
         closeModal();
       });
@@ -2941,15 +2976,37 @@ function RolesView({ roles, setRoles }: { roles: any[]; setRoles: any }) {
           <FF label="Descripción"><input value={form.desc} onChange={e => setForm(f => ({ ...f, desc: e.target.value }))} maxLength={60} className={iCls} /></FF>
           <div>
             <p className="text-xs font-black uppercase tracking-wide text-muted-foreground mb-3">Permisos de Acceso</p>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
               {allPerms.map(p => (
-                <label key={p} className={`flex items-center gap-2.5 px-3 py-2 rounded-xl cursor-pointer border transition-all ${form.perms[p] ? 'bg-primary/10 border-primary/30 text-primary' : 'bg-muted border-transparent text-muted-foreground'}`}>
-                  <input type="checkbox" checked={!!form.perms[p]} onChange={() => togglePerm(p)} className="sr-only" />
-                  <div className={`w-4 h-4 rounded flex items-center justify-center flex-shrink-0 ${form.perms[p] ? 'bg-primary' : 'bg-border'}`}>
-                    {form.perms[p] && <Check className="w-2.5 h-2.5 text-white" />}
-                  </div>
-                  <span className="text-xs font-bold">{p}</span>
-                </label>
+                <div key={p} className={`flex flex-col gap-2 px-3 py-2 rounded-xl border transition-all ${form.perms[p] ? 'bg-primary/5 border-primary/30' : 'bg-muted border-transparent'}`}>
+                  <label className="flex items-center gap-2.5 cursor-pointer">
+                    <input type="checkbox" checked={!!form.perms[p]} onChange={() => togglePerm(p)} className="sr-only" />
+                    <div className={`w-4 h-4 rounded flex items-center justify-center flex-shrink-0 ${form.perms[p] ? 'bg-primary' : 'bg-border'}`}>
+                      {form.perms[p] && <Check className="w-2.5 h-2.5 text-white" />}
+                    </div>
+                    <span className={`text-sm font-bold ${form.perms[p] ? 'text-primary' : 'text-muted-foreground'}`}>{p}</span>
+                  </label>
+                  {form.perms[p] && permPrivileges[p] && (
+                    <div className="ml-6 flex flex-wrap gap-2 mt-1 mb-1">
+                      {permPrivileges[p].map(priv => {
+                        const isChecked = form.privs[p]?.includes(priv);
+                        return (
+                          <label key={priv} className={`flex items-center gap-1.5 px-2 py-1 rounded-lg cursor-pointer border text-xs font-bold transition-all ${isChecked ? 'bg-primary/10 border-primary/30 text-primary' : 'bg-background border-border text-muted-foreground hover:bg-muted'}`}>
+                            <input type="checkbox" checked={isChecked} onChange={() => {
+                              const curr = form.privs[p] || [];
+                              const next = isChecked ? curr.filter(x => x !== priv) : [...curr, priv];
+                              setForm(f => ({ ...f, privs: { ...f.privs, [p]: next } }));
+                            }} className="sr-only" />
+                            <div className={`w-3 h-3 rounded-sm flex items-center justify-center flex-shrink-0 ${isChecked ? 'bg-primary' : 'bg-border'}`}>
+                              {isChecked && <Check className="w-2 h-2 text-white" />}
+                            </div>
+                            {priv}
+                          </label>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
               ))}
             </div>
           </div>
