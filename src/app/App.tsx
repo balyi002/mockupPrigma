@@ -2776,6 +2776,7 @@ function UsersView({ users, setUsers }: { users: any[]; setUsers: any }) {
   const [nameErr, setNameErr]   = useState('');
   const { ask, el: confirmEl }  = useConfirm();
   const { warn, el: alertEl }   = useAlert();
+  const [exportOpen, setExportOpen] = useState(false);
 
   const isEditing = !!editItem;
   const blankForm = { name: '', tipoDocumento: 'CC', numeroDocumento: '', telefono: '', role: 'Empleado', status: 'activo' };
@@ -2822,9 +2823,13 @@ function UsersView({ users, setUsers }: { users: any[]; setUsers: any }) {
   return (
     <div className="space-y-4">
       {confirmEl}{alertEl}
+      <ExportModal open={exportOpen} onClose={() => setExportOpen(false)} onExport={(f, t) => toast.success(`Usuarios exportados (${f} → ${t})`)} />
       <div className="flex items-center justify-between">
         <h2 className="font-black text-lg">Gestión de Usuarios</h2>
-        <button onClick={() => { setEditItem(null); setForm(blankForm); setNameErr(''); setIsOpen(true); }} className="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-xl text-sm font-bold hover:opacity-90"><Plus className="w-4 h-4" /> Nuevo</button>
+        <div className="flex gap-2">
+          <button onClick={() => setExportOpen(true)} className="flex items-center gap-2 px-3 py-2 border border-border rounded-xl text-sm font-bold hover:bg-muted"><FileDown className="w-4 h-4" /> Exportar</button>
+          <button onClick={() => { setEditItem(null); setForm(blankForm); setNameErr(''); setIsOpen(true); }} className="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-xl text-sm font-bold hover:opacity-90"><Plus className="w-4 h-4" /> Nuevo</button>
+        </div>
       </div>
       <div className="relative"><Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" /><input value={search} onChange={e => { setSearch(e.target.value); setPage(1); }} placeholder="Buscar usuario..." className={`${iCls} pl-9`} /></div>
       <TableWrapper>
