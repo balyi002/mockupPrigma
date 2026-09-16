@@ -3050,11 +3050,11 @@ function RolesView({ roles, setRoles }: { roles: any[]; setRoles: any }) {
 
 // ─── Mobile Components ───────────────────────────────────────────────────────
 const mobileNavTabs = [
-  { id: 'sales-register', label: 'Ventas',    icon: BookOpen     },
   { id: 'products',       label: 'Productos', icon: Package2     },
   { id: 'purchases',      label: 'Compras',   icon: ShoppingCart },
   { id: 'employees',      label: 'Empleados', icon: Users        },
   { id: 'agenda',         label: 'Agenda',    icon: CalendarDays },
+  { id: 'sales-register', label: 'Ventas',    icon: BookOpen     },
 ];
 
 const mobileViewLabels: Record<string, string> = {
