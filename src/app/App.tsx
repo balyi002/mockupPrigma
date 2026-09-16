@@ -1981,7 +1981,7 @@ function EmployeesView({ employees, setEmployees, roles, sales = [], isMobile = 
           {!isMobile && <p className="text-xs text-muted-foreground">Para crear empleados en escritorio, hazlo desde Gestión de Usuarios</p>}
         </div>
         <div className="flex gap-2">
-          <button onClick={() => setExportOpen(true)} className="flex items-center gap-2 px-3 py-2 border border-border rounded-xl text-sm font-bold hover:bg-muted"><FileDown className="w-4 h-4" />{!isMobile && ' Exportar'}</button>
+          {!isMobile && <button onClick={() => setExportOpen(true)} className="flex items-center gap-2 px-3 py-2 border border-border rounded-xl text-sm font-bold hover:bg-muted"><FileDown className="w-4 h-4" /> Exportar</button>}
           {isMobile && <button onClick={openCreate} className="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-xl text-sm font-bold hover:opacity-90"><Plus className="w-4 h-4" /> Nuevo</button>}
         </div>
       </div>
