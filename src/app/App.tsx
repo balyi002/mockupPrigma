@@ -2943,6 +2943,13 @@ function RolesView({ roles, setRoles }: { roles: any[]; setRoles: any }) {
 
   const togglePerm = (p: string) => setForm(f => ({ ...f, perms: { ...f.perms, [p]: !f.perms[p] } }));
 
+  const deleteRole = (role: any) => {
+    ask(`¿Estás seguro de eliminar el rol "${role.name}"?`, () => {
+      setRoles((prev: any[]) => prev.filter((r: any) => r.id !== role.id));
+      toast.success(`Rol "${role.name}" eliminado.`);
+    });
+  };
+
   const roleColors: Record<string, string> = {
     Administrador: 'bg-purple-100 text-purple-600',
     Empleado:      'bg-blue-100 text-blue-600',
@@ -2978,7 +2985,8 @@ function RolesView({ roles, setRoles }: { roles: any[]; setRoles: any }) {
                 </div>
                 <div className="flex items-center gap-2">
                   <ToggleSwitch checked={role.status === 'activo'} onChange={() => toggleRoleStatus(role)} />
-                  <button onClick={() => openEdit(role)} className="w-8 h-8 rounded-lg hover:bg-primary/10 flex items-center justify-center text-primary"><Edit2 className="w-3.5 h-3.5" /></button>
+                  <button onClick={() => openEdit(role)} className="w-8 h-8 rounded-lg hover:bg-primary/10 flex items-center justify-center text-primary" title="Editar"><Edit2 className="w-3.5 h-3.5" /></button>
+                  <button onClick={() => deleteRole(role)} className="w-8 h-8 rounded-lg hover:bg-red-100 flex items-center justify-center text-red-600" title="Eliminar"><Trash2 className="w-3.5 h-3.5" /></button>
                 </div>
               </div>
               <div className="space-y-2">
