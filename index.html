@@ -8,6 +8,14 @@
       <title>PRIGMA</title>
       <meta name="description" content="Streamline operations for Variedades Carito with an intuitive web dashboard for managing inventory, sales, services, and user roles, enhancing efficiency and performance." />
       <meta name="robots" content="noindex, nofollow" />
+      <script>
+        try {
+          var stored = localStorage.getItem('prigma_theme');
+          if (stored === '"dark"' || stored === 'dark') {
+            document.documentElement.classList.add('dark');
+          }
+        } catch (e) {}
+      </script>
       <style>html, body { height: 100%; margin: 0; } #root { height: 100%; }</style>
       
     </head>

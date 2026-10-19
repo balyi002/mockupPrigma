@@ -5,7 +5,8 @@ import {
   ShoppingBag, DollarSign, BarChart2, LogOut, ArrowUpRight, Trash2, Minus,
   X, Check, Truck, Edit2, Lock, User, Clock, Package2, Star, ChevronLeft,
   BookOpen, Tag, FileText, AlertCircle, Eye, Printer, AlertTriangle,
-  CheckCircle2, FileDown, ShoppingBag as SBag, Menu, Ban, EyeOff, CalendarDays
+  CheckCircle2, FileDown, ShoppingBag as SBag, Menu, Ban, EyeOff, CalendarDays,
+  Sun, Moon
 } from 'lucide-react';
 import {
   BarChart as ReBarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
@@ -218,32 +219,37 @@ const initPurchases: Purchase[] = [
 ];
 
 const posProducts = [
-  { id: 1,  name: 'Cuaderno Rayado A4',    price: 8500,  category: 'Papelería',  bg: 'bg-blue-50',   emoji: '📓', stock: 45  },
-  { id: 2,  name: 'Set Bolígrafos x6',     price: 5000,  category: 'Papelería',  bg: 'bg-blue-50',   emoji: '✏️', stock: 80  },
-  { id: 3,  name: 'Labial Mate Coral',     price: 22000, category: 'Cosméticos', bg: 'bg-pink-50',   emoji: '💄', stock: 3   },
-  { id: 4,  name: 'Paleta Sombras Nude',   price: 45000, category: 'Cosméticos', bg: 'bg-pink-50',   emoji: '🎨', stock: 12  },
-  { id: 5,  name: 'Bolso Mini Pana',       price: 55000, category: 'Accesorios', bg: 'bg-purple-50', emoji: '👜', stock: 8   },
-  { id: 6,  name: 'Aretes Perla Gota',     price: 15000, category: 'Accesorios', bg: 'bg-purple-50', emoji: '💎', stock: 0   },
-  { id: 7,  name: 'Máscara Pestañas',      price: 28000, category: 'Cosméticos', bg: 'bg-pink-50',   emoji: '👁️', stock: 2   },
-  { id: 8,  name: 'Collar Dorado Chain',   price: 25000, category: 'Accesorios', bg: 'bg-purple-50', emoji: '📿', stock: 18  },
-  { id: 9,  name: 'Fotocopia B&N',         price: 200,   category: 'Servicios',  bg: 'bg-green-50',  emoji: '🖨️', stock: 999 },
-  { id: 10, name: 'Impresión Color A4',    price: 800,   category: 'Servicios',  bg: 'bg-green-50',  emoji: '🖨️', stock: 999 },
-  { id: 11, name: 'Plastificado A4',       price: 3500,  category: 'Servicios',  bg: 'bg-green-50',  emoji: '📋', stock: 999 },
-  { id: 12, name: 'Recarga Claro 5k',      price: 5000,  category: 'Servicios',  bg: 'bg-green-50',  emoji: '📱', stock: 999 },
-  { id: 13, name: 'Recarga Movistar 10k',  price: 10000, category: 'Servicios',  bg: 'bg-green-50',  emoji: '📱', stock: 999 },
-  { id: 14, name: 'Escaneo Documento',     price: 1500,  category: 'Servicios',  bg: 'bg-green-50',  emoji: '📄', stock: 999 },
-  { id: 15, name: 'Cargador USB-C',        price: 35000, category: 'Tecnología', bg: 'bg-yellow-50', emoji: '🔌', stock: 14  },
-  { id: 16, name: 'Funda Silicona iPhone', price: 18000, category: 'Tecnología', bg: 'bg-yellow-50', emoji: '📱', stock: 22  },
-  { id: 17, name: 'Audífonos In-Ear',      price: 42000, category: 'Tecnología', bg: 'bg-yellow-50', emoji: '🎧', stock: 7   },
-  { id: 18, name: 'Porta Documentos A4',   price: 12000, category: 'Papelería',  bg: 'bg-blue-50',   emoji: '📁', stock: 30  },
-  { id: 19, name: 'Bisturí + Repuesto',    price: 3500,  category: 'Papelería',  bg: 'bg-blue-50',   emoji: '✂️', stock: 60  },
+  { id: 1,  name: 'Cuaderno Rayado A4',    price: 8500,  category: 'Papelería',  bg: 'bg-blue-50/80 dark:bg-blue-950/40 dark:border dark:border-blue-800/40',   emoji: '📓', stock: 45  },
+  { id: 2,  name: 'Set Bolígrafos x6',     price: 5000,  category: 'Papelería',  bg: 'bg-blue-50/80 dark:bg-blue-950/40 dark:border dark:border-blue-800/40',   emoji: '✏️', stock: 80  },
+  { id: 3,  name: 'Labial Mate Coral',     price: 22000, category: 'Cosméticos', bg: 'bg-pink-50/80 dark:bg-pink-950/40 dark:border dark:border-pink-800/40',   emoji: '💄', stock: 3   },
+  { id: 4,  name: 'Paleta Sombras Nude',   price: 45000, category: 'Cosméticos', bg: 'bg-pink-50/80 dark:bg-pink-950/40 dark:border dark:border-pink-800/40',   emoji: '🎨', stock: 12  },
+  { id: 5,  name: 'Bolso Mini Pana',       price: 55000, category: 'Accesorios', bg: 'bg-purple-50/80 dark:bg-purple-950/40 dark:border dark:border-purple-800/40', emoji: '👜', stock: 8   },
+  { id: 6,  name: 'Aretes Perla Gota',     price: 15000, category: 'Accesorios', bg: 'bg-purple-50/80 dark:bg-purple-950/40 dark:border dark:border-purple-800/40', emoji: '💎', stock: 0   },
+  { id: 7,  name: 'Máscara Pestañas',      price: 28000, category: 'Cosméticos', bg: 'bg-pink-50/80 dark:bg-pink-950/40 dark:border dark:border-pink-800/40',   emoji: '👁️', stock: 2   },
+  { id: 8,  name: 'Collar Dorado Chain',   price: 25000, category: 'Accesorios', bg: 'bg-purple-50/80 dark:bg-purple-950/40 dark:border dark:border-purple-800/40', emoji: '📿', stock: 18  },
+  { id: 9,  name: 'Fotocopia B&N',         price: 200,   category: 'Servicios',  bg: 'bg-green-50/80 dark:bg-green-950/40 dark:border dark:border-green-800/40',  emoji: '🖨️', stock: 999 },
+  { id: 10, name: 'Impresión Color A4',    price: 800,   category: 'Servicios',  bg: 'bg-green-50/80 dark:bg-green-950/40 dark:border dark:border-green-800/40',  emoji: '🖨️', stock: 999 },
+  { id: 11, name: 'Plastificado A4',       price: 3500,  category: 'Servicios',  bg: 'bg-green-50/80 dark:bg-green-950/40 dark:border dark:border-green-800/40',  emoji: '📋', stock: 999 },
+  { id: 12, name: 'Recarga Claro 5k',      price: 5000,  category: 'Servicios',  bg: 'bg-green-50/80 dark:bg-green-950/40 dark:border dark:border-green-800/40',  emoji: '📱', stock: 999 },
+  { id: 13, name: 'Recarga Movistar 10k',  price: 10000, category: 'Servicios',  bg: 'bg-green-50/80 dark:bg-green-950/40 dark:border dark:border-green-800/40',  emoji: '📱', stock: 999 },
+  { id: 14, name: 'Escaneo Documento',     price: 1500,  category: 'Servicios',  bg: 'bg-green-50/80 dark:bg-green-950/40 dark:border dark:border-green-800/40',  emoji: '📄', stock: 999 },
+  { id: 15, name: 'Cargador USB-C',        price: 35000, category: 'Tecnología', bg: 'bg-yellow-50/80 dark:bg-yellow-950/40 dark:border dark:border-yellow-800/40', emoji: '🔌', stock: 14  },
+  { id: 16, name: 'Funda Silicona iPhone', price: 18000, category: 'Tecnología', bg: 'bg-yellow-50/80 dark:bg-yellow-950/40 dark:border dark:border-yellow-800/40', emoji: '📱', stock: 22  },
+  { id: 17, name: 'Audífonos In-Ear',      price: 42000, category: 'Tecnología', bg: 'bg-yellow-50/80 dark:bg-yellow-950/40 dark:border dark:border-yellow-800/40', emoji: '🎧', stock: 7   },
+  { id: 18, name: 'Porta Documentos A4',   price: 12000, category: 'Papelería',  bg: 'bg-blue-50/80 dark:bg-blue-950/40 dark:border dark:border-blue-800/40',   emoji: '📁', stock: 30  },
+  { id: 19, name: 'Bisturí + Repuesto',    price: 3500,  category: 'Papelería',  bg: 'bg-blue-50/80 dark:bg-blue-950/40 dark:border dark:border-blue-800/40',   emoji: '✂️', stock: 60  },
 ];
 const posCategories = ['Todos', 'Papelería', 'Cosméticos', 'Accesorios', 'Servicios', 'Tecnología'];
 
 const scheduleWeek = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
 const scheduleDayColors = [
-  'bg-blue-50 text-blue-700','bg-purple-50 text-purple-700','bg-pink-50 text-pink-700',
-  'bg-amber-50 text-amber-700','bg-green-50 text-green-700','bg-orange-50 text-orange-700','bg-gray-50 text-gray-500',
+  'bg-blue-50 text-blue-700 dark:bg-blue-950/50 dark:text-blue-300 dark:border dark:border-blue-800/40',
+  'bg-purple-50 text-purple-700 dark:bg-purple-950/50 dark:text-purple-300 dark:border dark:border-purple-800/40',
+  'bg-pink-50 text-pink-700 dark:bg-pink-950/50 dark:text-pink-300 dark:border dark:border-pink-800/40',
+  'bg-amber-50 text-amber-700 dark:bg-amber-950/50 dark:text-amber-300 dark:border dark:border-amber-800/40',
+  'bg-green-50 text-green-700 dark:bg-green-950/50 dark:text-green-300 dark:border dark:border-green-800/40',
+  'bg-orange-50 text-orange-700 dark:bg-orange-950/50 dark:text-orange-300 dark:border dark:border-orange-800/40',
+  'bg-gray-50 text-gray-600 dark:bg-zinc-800/60 dark:text-zinc-300 dark:border dark:border-zinc-700/40',
 ];
 
 const weekSalesData = [
@@ -292,16 +298,23 @@ const navItems: NavItem[] = [
 function StatusBadge({ status }: { status: string }) {
   const s = status.toLowerCase();
   const map: Record<string, string> = {
-    activo: 'bg-green-100 text-green-700', inactivo: 'bg-red-100 text-red-700',
-    completado: 'bg-green-100 text-green-700', apartado: 'bg-purple-100 text-purple-700',
-    pendiente: 'bg-yellow-100 text-yellow-700', cancelado: 'bg-red-100 text-red-700',
-    anulado: 'bg-gray-200 text-gray-600', pagado: 'bg-green-100 text-green-700',
-    nuevo: 'bg-blue-100 text-blue-700', ocasional: 'bg-cyan-100 text-cyan-700',
-    frecuente: 'bg-emerald-100 text-emerald-700',
-    optimo: 'bg-green-100 text-green-700', bajo: 'bg-orange-100 text-orange-700',
-    critico: 'bg-red-100 text-red-700', 'sin stock': 'bg-gray-200 text-gray-600',
+    activo: 'bg-green-100 text-green-700 dark:bg-green-950/60 dark:text-green-300 dark:border dark:border-green-800/40',
+    inactivo: 'bg-red-100 text-red-700 dark:bg-red-950/60 dark:text-red-300 dark:border dark:border-red-800/40',
+    completado: 'bg-green-100 text-green-700 dark:bg-green-950/60 dark:text-green-300 dark:border dark:border-green-800/40',
+    apartado: 'bg-purple-100 text-purple-700 dark:bg-purple-950/60 dark:text-purple-300 dark:border dark:border-purple-800/40',
+    pendiente: 'bg-yellow-100 text-yellow-700 dark:bg-yellow-950/60 dark:text-yellow-300 dark:border dark:border-yellow-800/40',
+    cancelado: 'bg-red-100 text-red-700 dark:bg-red-950/60 dark:text-red-300 dark:border dark:border-red-800/40',
+    anulado: 'bg-gray-200 text-gray-600 dark:bg-zinc-800/80 dark:text-zinc-300 dark:border dark:border-zinc-700/40',
+    pagado: 'bg-green-100 text-green-700 dark:bg-green-950/60 dark:text-green-300 dark:border dark:border-green-800/40',
+    nuevo: 'bg-blue-100 text-blue-700 dark:bg-blue-950/60 dark:text-blue-300 dark:border dark:border-blue-800/40',
+    ocasional: 'bg-cyan-100 text-cyan-700 dark:bg-cyan-950/60 dark:text-cyan-300 dark:border dark:border-cyan-800/40',
+    frecuente: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300 dark:border dark:border-emerald-800/40',
+    optimo: 'bg-green-100 text-green-700 dark:bg-green-950/60 dark:text-green-300 dark:border dark:border-green-800/40',
+    bajo: 'bg-orange-100 text-orange-700 dark:bg-orange-950/60 dark:text-orange-300 dark:border dark:border-orange-800/40',
+    critico: 'bg-red-100 text-red-700 dark:bg-red-950/60 dark:text-red-300 dark:border dark:border-red-800/40',
+    'sin stock': 'bg-gray-200 text-gray-600 dark:bg-zinc-800/80 dark:text-zinc-300 dark:border dark:border-zinc-700/40',
   };
-  const cls = map[s] || 'bg-gray-100 text-gray-600';
+  const cls = map[s] || 'bg-gray-100 text-gray-600 dark:bg-zinc-800/60 dark:text-zinc-300';
   return (
     <span className={`inline-flex px-2.5 py-0.5 rounded-full text-xs font-bold ${cls}`}>
       {status.charAt(0).toUpperCase() + status.slice(1)}
@@ -314,7 +327,7 @@ function ToggleSwitch({ checked, onChange }: { checked: boolean; onChange: () =>
     <button
       onClick={onChange}
       title={checked ? 'Activo — clic para desactivar' : 'Inactivo — clic para activar'}
-      className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors flex-shrink-0 focus:outline-none ${checked ? 'bg-green-500' : 'bg-gray-300'}`}
+      className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors flex-shrink-0 focus:outline-none ${checked ? 'bg-green-500' : 'bg-gray-300 dark:bg-zinc-700'}`}
     >
       <span className={`inline-block h-3.5 w-3.5 transform rounded-full bg-white shadow-sm transition-transform ${checked ? 'translate-x-[18px]' : 'translate-x-[2px]'}`} />
     </button>
@@ -323,22 +336,63 @@ function ToggleSwitch({ checked, onChange }: { checked: boolean; onChange: () =>
 
 function InlineStatusSelect({ value, options, onChange }: { value: string; options: string[]; onChange: (v: string) => void }) {
   const colorMap: Record<string, string> = {
-    completado: 'text-green-700 bg-green-50 border-green-300',
-    Apartado:   'text-purple-700 bg-purple-50 border-purple-300',
-    Pendiente:  'text-yellow-700 bg-yellow-50 border-yellow-300',
-    Cancelado:  'text-red-700 bg-red-50 border-red-300',
-    activo:     'text-green-700 bg-green-50 border-green-300',
-    inactivo:   'text-red-700 bg-red-50 border-red-300',
+    completado: 'text-green-700 bg-green-50 border-green-300 dark:bg-green-950/50 dark:text-green-300 dark:border-green-800/50',
+    Apartado:   'text-purple-700 bg-purple-50 border-purple-300 dark:bg-purple-950/50 dark:text-purple-300 dark:border-purple-800/50',
+    Pendiente:  'text-yellow-700 bg-yellow-50 border-yellow-300 dark:bg-yellow-950/50 dark:text-yellow-300 dark:border-yellow-800/50',
+    Cancelado:  'text-red-700 bg-red-50 border-red-300 dark:bg-red-950/50 dark:text-red-300 dark:border-red-800/50',
+    activo:     'text-green-700 bg-green-50 border-green-300 dark:bg-green-950/50 dark:text-green-300 dark:border-green-800/50',
+    inactivo:   'text-red-700 bg-red-50 border-red-300 dark:bg-red-950/50 dark:text-red-300 dark:border-red-800/50',
   };
-  const cls = colorMap[value] || 'bg-gray-50 border-gray-300 text-gray-700';
+  const cls = colorMap[value] || 'bg-gray-50 border-gray-300 text-gray-700 dark:bg-zinc-800/60 dark:border-zinc-700 dark:text-zinc-200';
   return (
     <select
       value={value}
       onChange={e => onChange(e.target.value)}
       className={`border rounded-lg px-2 py-1 text-xs font-bold focus:outline-none cursor-pointer ${cls}`}
     >
-      {options.map(o => <option key={o} value={o}>{o.charAt(0).toUpperCase() + o.slice(1)}</option>)}
+      {options.map(o => <option key={o} value={o} className="bg-card text-foreground">{o.charAt(0).toUpperCase() + o.slice(1)}</option>)}
     </select>
+  );
+}
+
+function ThemeToggle({
+  theme,
+  onToggle,
+  className = '',
+  size = 'md',
+}: {
+  theme: 'light' | 'dark';
+  onToggle: () => void;
+  className?: string;
+  size?: 'sm' | 'md';
+}) {
+  const isDark = theme === 'dark';
+  return (
+    <button
+      onClick={onToggle}
+      type="button"
+      title={isDark ? 'Cambiar a modo claro (Light)' : 'Cambiar a modo oscuro (Dark)'}
+      aria-label={isDark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'}
+      className={`group relative flex items-center justify-center gap-2 rounded-xl border border-border bg-card hover:bg-muted text-foreground transition-all duration-300 shadow-sm active:scale-95 cursor-pointer ${
+        size === 'sm' ? 'h-8 px-2.5 text-xs' : 'h-8 sm:h-9 px-2.5 sm:px-3 text-xs'
+      } ${className}`}
+    >
+      <div className="relative w-4 h-4 flex items-center justify-center flex-shrink-0">
+        {isDark ? (
+          <Sun className="w-4 h-4 text-amber-400 group-hover:rotate-45 transition-transform duration-300" />
+        ) : (
+          <Moon className="w-4 h-4 text-primary group-hover:-rotate-12 transition-transform duration-300" />
+        )}
+      </div>
+      <span className="font-black text-xs hidden sm:inline-block tracking-wide">
+        {isDark ? 'Claro' : 'Oscuro'}
+      </span>
+      <span
+        className={`w-1.5 h-1.5 rounded-full flex-shrink-0 transition-colors ${
+          isDark ? 'bg-amber-400 shadow-[0_0_6px_#fbbf24]' : 'bg-primary shadow-[0_0_6px_#ED498C]'
+        }`}
+      />
+    </button>
   );
 }
 
@@ -439,12 +493,12 @@ function Pagination({ page, total, onPage }: { page: number; total: number; onPa
 function ConfirmModal({ open, msg, onConfirm, onClose }: { open: boolean; msg: string; onConfirm: () => void; onClose: () => void }) {
   if (!open) return null;
   return (
-    <div className="fixed inset-0 z-[60] flex items-center justify-center p-4" style={{ background: 'rgba(0,0,0,0.45)' }}>
-      <div className="bg-card rounded-2xl shadow-2xl w-full max-w-sm p-6 text-center">
-        <div className="w-14 h-14 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
+    <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+      <div className="bg-card rounded-2xl shadow-2xl border border-border w-full max-w-sm p-6 text-center">
+        <div className="w-14 h-14 bg-amber-100 dark:bg-amber-950/60 rounded-full flex items-center justify-center mx-auto mb-4">
           <AlertTriangle className="w-7 h-7 text-amber-500" />
         </div>
-        <h3 className="font-black text-lg mb-2">¿Confirmar acción?</h3>
+        <h3 className="font-black text-lg mb-2 text-foreground">¿Confirmar acción?</h3>
         <p className="text-sm text-muted-foreground mb-6">{msg}</p>
         <div className="flex gap-3">
           <button onClick={onClose} className="flex-1 py-2.5 border border-border rounded-xl text-sm font-bold hover:bg-muted">Cancelar</button>
@@ -458,12 +512,12 @@ function ConfirmModal({ open, msg, onConfirm, onClose }: { open: boolean; msg: s
 function AlertModal({ open, msg, onClose }: { open: boolean; msg: string; onClose: () => void }) {
   if (!open) return null;
   return (
-    <div className="fixed inset-0 z-[60] flex items-center justify-center p-4" style={{ background: 'rgba(0,0,0,0.45)' }}>
-      <div className="bg-card rounded-2xl shadow-2xl w-full max-w-sm p-6 text-center">
-        <div className="w-14 h-14 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+    <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+      <div className="bg-card rounded-2xl shadow-2xl border border-border w-full max-w-sm p-6 text-center">
+        <div className="w-14 h-14 bg-red-100 dark:bg-red-950/60 rounded-full flex items-center justify-center mx-auto mb-4">
           <AlertCircle className="w-7 h-7 text-red-500" />
         </div>
-        <h3 className="font-black text-lg mb-2">Acción bloqueada</h3>
+        <h3 className="font-black text-lg mb-2 text-foreground">Acción bloqueada</h3>
         <p className="text-sm text-muted-foreground mb-6">{msg}</p>
         <button onClick={onClose} className="w-full py-2.5 bg-primary text-white rounded-xl text-sm font-bold hover:opacity-90">Entendido</button>
       </div>
@@ -827,10 +881,21 @@ function DashboardView({ sales, orders }: { sales: Sale[]; orders: Order[] }) {
               date.setDate(date.getDate() + i);
               return { ...d, day: `${d.day} ${date.getDate()}` };
             })} barGap={4}>
-              <CartesianGrid strokeDasharray="3 3" stroke="rgba(186,156,219,0.15)" />
-              <XAxis dataKey="day" tick={{ fontSize: 11 }} />
-              <YAxis tick={{ fontSize: 11 }} tickFormatter={v => `${Math.round(v/1000)}k`} />
-              <Tooltip formatter={(v: number) => formatCOP(v)} />
+              <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" opacity={0.6} />
+              <XAxis dataKey="day" tick={{ fontSize: 11, fill: 'var(--muted-foreground)' }} axisLine={{ stroke: 'var(--border)' }} />
+              <YAxis tick={{ fontSize: 11, fill: 'var(--muted-foreground)' }} axisLine={{ stroke: 'var(--border)' }} tickFormatter={v => `${Math.round(v/1000)}k`} />
+              <Tooltip
+                contentStyle={{
+                  backgroundColor: 'var(--card)',
+                  borderColor: 'var(--border)',
+                  borderRadius: '0.75rem',
+                  color: 'var(--foreground)',
+                  boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.25)',
+                }}
+                itemStyle={{ color: 'var(--foreground)' }}
+                labelStyle={{ color: 'var(--foreground)', fontWeight: 'bold' }}
+                formatter={(v: number) => formatCOP(v)}
+              />
               <Bar key="bar-ventas" dataKey="ventas" fill="#ED498C" radius={[6,6,0,0]} name="Ventas" />
               <Bar key="bar-meta"   dataKey="meta"   fill="#BA9CDB" radius={[6,6,0,0]} name="Meta" opacity={0.4} />
             </ReBarChart>
@@ -843,7 +908,16 @@ function DashboardView({ sales, orders }: { sales: Sale[]; orders: Order[] }) {
               <Pie data={topProducts} dataKey="value" cx="50%" cy="50%" outerRadius={60} innerRadius={30}>
                 {topProducts.map((entry, i) => <Cell key={`cell-${i}`} fill={entry.color} />)}
               </Pie>
-              <Tooltip />
+              <Tooltip
+                contentStyle={{
+                  backgroundColor: 'var(--card)',
+                  borderColor: 'var(--border)',
+                  borderRadius: '0.75rem',
+                  color: 'var(--foreground)',
+                  boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.25)',
+                }}
+                itemStyle={{ color: 'var(--foreground)' }}
+              />
             </PieChart>
           </ResponsiveContainer>
           <div className="space-y-2 mt-3">
@@ -866,11 +940,22 @@ function DashboardView({ sales, orders }: { sales: Sale[]; orders: Order[] }) {
           </div>
           <ResponsiveContainer width="100%" height={180}>
             <AreaChart data={monthlyData}>
-              <CartesianGrid strokeDasharray="3 3" stroke="rgba(186,156,219,0.15)" />
-              <XAxis dataKey="mes" tick={{ fontSize: 11 }} />
-              <YAxis tick={{ fontSize: 11 }} tickFormatter={v => `${Math.round(v/1000000)}M`} />
-              <Tooltip formatter={(v: number) => formatCOP(v)} />
-              <Area key="area-ventas" type="monotone" dataKey="ventas" stroke="#ED498C" fill="#ED498C" fillOpacity={0.12} name="Ventas" />
+              <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" opacity={0.6} />
+              <XAxis dataKey="mes" tick={{ fontSize: 11, fill: 'var(--muted-foreground)' }} axisLine={{ stroke: 'var(--border)' }} />
+              <YAxis tick={{ fontSize: 11, fill: 'var(--muted-foreground)' }} axisLine={{ stroke: 'var(--border)' }} tickFormatter={v => `${Math.round(v/1000000)}M`} />
+              <Tooltip
+                contentStyle={{
+                  backgroundColor: 'var(--card)',
+                  borderColor: 'var(--border)',
+                  borderRadius: '0.75rem',
+                  color: 'var(--foreground)',
+                  boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.25)',
+                }}
+                itemStyle={{ color: 'var(--foreground)' }}
+                labelStyle={{ color: 'var(--foreground)', fontWeight: 'bold' }}
+                formatter={(v: number) => formatCOP(v)}
+              />
+              <Area key="area-ventas" type="monotone" dataKey="ventas" stroke="#ED498C" fill="#ED498C" fillOpacity={0.16} name="Ventas" />
             </AreaChart>
           </ResponsiveContainer>
         </div>
@@ -3073,7 +3158,7 @@ const mobileViewLabels: Record<string, string> = {
   agenda:           'Agenda',
 };
 
-function LoginScreen({ onLogin }: { onLogin: () => void }) {
+function LoginScreen({ onLogin, theme, onToggleTheme }: { onLogin: () => void; theme: 'light' | 'dark'; onToggleTheme: () => void }) {
   const [email, setEmail]       = useState('');
   const [password, setPassword] = useState('');
   const [showPwd, setShowPwd]   = useState(false);
@@ -3089,45 +3174,50 @@ function LoginScreen({ onLogin }: { onLogin: () => void }) {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center px-6 py-10" style={{ background: '#FAF8FD' }}>
+    <div className="min-h-screen flex flex-col items-center justify-center px-6 py-10 bg-background text-foreground relative">
+      {/* Theme toggle always visible in top right of login screen */}
+      <div className="fixed top-4 right-4 z-50">
+        <ThemeToggle theme={theme} onToggle={onToggleTheme} />
+      </div>
+
       <div className="w-full max-w-sm">
         <div className="flex flex-col items-center mb-8">
-          <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-4" style={{ background: '#ED498C' }}>
+          <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-4 bg-primary shadow-lg shadow-primary/25">
             <SBag className="w-8 h-8 text-white" />
           </div>
-          <h1 className="font-black text-2xl" style={{ color: '#2D1B69' }}>PRIGMA</h1>
+          <h1 className="font-black text-2xl text-foreground">PRIGMA</h1>
           <p className="text-sm text-muted-foreground">Variedades Carito</p>
         </div>
 
         {!recovery ? (
           <div className="space-y-4">
-            <h2 className="font-black text-xl text-center" style={{ color: '#2D1B69' }}>Iniciar Sesión</h2>
-            {err && <div className="bg-red-50 border border-red-200 text-red-700 text-sm rounded-xl px-4 py-3">{err}</div>}
+            <h2 className="font-black text-xl text-center text-foreground">Iniciar Sesión</h2>
+            {err && <div className="bg-red-50 dark:bg-red-950/50 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 text-sm rounded-xl px-4 py-3">{err}</div>}
             <FF label="Correo electrónico">
               <input type="email" value={email} onChange={e => { setEmail(e.target.value); setErr(''); }} placeholder="usuario@variedades.co" className={iCls} />
             </FF>
             <FF label="Contraseña">
               <div className="relative">
                 <input type={showPwd ? 'text' : 'password'} value={password} onChange={e => { setPassword(e.target.value); setErr(''); }} onKeyDown={e => e.key === 'Enter' && handleLogin()} placeholder="••••••••" className={`${iCls} pr-10`} />
-                <button type="button" onClick={() => setShowPwd(v => !v)} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground">
+                <button type="button" onClick={() => setShowPwd(v => !v)} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground">
                   {showPwd ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
               </div>
             </FF>
-            <button onClick={handleLogin} className="w-full py-3 rounded-xl font-black text-white text-sm" style={{ background: '#ED498C' }}>
+            <button onClick={handleLogin} className="w-full py-3 rounded-xl font-black text-white text-sm bg-primary hover:opacity-90 transition-opacity shadow-md shadow-primary/20 cursor-pointer">
               Ingresar
             </button>
-            <button onClick={() => { setRecovery(true); setErr(''); }} className="w-full text-center text-sm font-bold" style={{ color: '#2D1B69' }}>
+            <button onClick={() => { setRecovery(true); setErr(''); }} className="w-full text-center text-sm font-bold text-foreground hover:text-primary transition-colors cursor-pointer">
               ¿Olvidaste tu contraseña?
             </button>
             <p className="text-center text-xs text-muted-foreground">Demo: cualquier correo + contraseña <strong>1234</strong></p>
           </div>
         ) : (
           <div className="space-y-4">
-            <h2 className="font-black text-xl text-center" style={{ color: '#2D1B69' }}>Recuperar Contraseña</h2>
+            <h2 className="font-black text-xl text-center text-foreground">Recuperar Contraseña</h2>
             {recSent ? (
-              <div className="bg-green-50 border border-green-200 text-green-700 text-sm rounded-xl px-4 py-4 text-center">
-                <CheckCircle2 className="w-6 h-6 mx-auto mb-2" />
+              <div className="bg-green-50 dark:bg-green-950/50 border border-green-200 dark:border-green-800 text-green-700 dark:text-green-300 text-sm rounded-xl px-4 py-4 text-center">
+                <CheckCircle2 className="w-6 h-6 mx-auto mb-2 text-green-500" />
                 Revisa tu correo <strong>{recEmail}</strong> con las instrucciones.
               </div>
             ) : (
@@ -3136,11 +3226,11 @@ function LoginScreen({ onLogin }: { onLogin: () => void }) {
               </FF>
             )}
             {!recSent && (
-              <button onClick={() => { if (recEmail.trim()) { setRecSent(true); } }} className="w-full py-3 rounded-xl font-black text-white text-sm" style={{ background: '#ED498C' }}>
+              <button onClick={() => { if (recEmail.trim()) { setRecSent(true); } }} className="w-full py-3 rounded-xl font-black text-white text-sm bg-primary hover:opacity-90 transition-opacity shadow-md shadow-primary/20 cursor-pointer">
                 Enviar instrucciones
               </button>
             )}
-            <button onClick={() => { setRecovery(false); setRecSent(false); setRecEmail(''); }} className="w-full text-center text-sm font-bold" style={{ color: '#2D1B69' }}>
+            <button onClick={() => { setRecovery(false); setRecSent(false); setRecEmail(''); }} className="w-full text-center text-sm font-bold text-foreground hover:text-primary transition-colors cursor-pointer">
               ← Volver al inicio de sesión
             </button>
           </div>
@@ -3150,33 +3240,46 @@ function LoginScreen({ onLogin }: { onLogin: () => void }) {
   );
 }
 
-function MobileHeader({ viewId, onLogout }: { viewId: string; onLogout: () => void }) {
+function MobileHeader({
+  viewId,
+  onLogout,
+  theme,
+  onToggleTheme,
+}: {
+  viewId: string;
+  onLogout: () => void;
+  theme: 'light' | 'dark';
+  onToggleTheme: () => void;
+}) {
   return (
-    <header className="fixed top-0 left-0 right-0 z-40 h-14 flex items-center justify-between px-4 border-b border-border" style={{ background: '#FAF8FD' }}>
+    <header className="fixed top-0 left-0 right-0 z-40 h-14 flex items-center justify-between px-4 border-b border-border bg-card/95 backdrop-blur-md">
       <div className="flex items-center gap-2">
-        <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: '#ED498C' }}>
+        <div className="w-7 h-7 rounded-lg flex items-center justify-center bg-primary flex-shrink-0">
           <SBag className="w-4 h-4 text-white" />
         </div>
-        <span className="font-black text-sm" style={{ color: '#2D1B69' }}>PRIGMA</span>
+        <span className="font-black text-sm text-foreground">PRIGMA</span>
       </div>
-      <span className="font-bold text-sm text-muted-foreground">{mobileViewLabels[viewId] || 'PRIGMA'}</span>
-      <button onClick={onLogout} className="w-8 h-8 rounded-lg hover:bg-muted flex items-center justify-center text-muted-foreground">
-        <LogOut className="w-4 h-4" />
-      </button>
+      <span className="font-bold text-xs text-muted-foreground truncate max-w-[120px]">{mobileViewLabels[viewId] || 'PRIGMA'}</span>
+      <div className="flex items-center gap-1.5">
+        <ThemeToggle theme={theme} onToggle={onToggleTheme} size="sm" />
+        <button onClick={onLogout} title="Cerrar sesión" className="w-8 h-8 rounded-lg hover:bg-muted flex items-center justify-center text-muted-foreground">
+          <LogOut className="w-4 h-4" />
+        </button>
+      </div>
     </header>
   );
 }
 
 function MobileBottomNav({ currentView, setCurrentView }: { currentView: string; setCurrentView: (v: string) => void }) {
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-40 border-t border-border flex" style={{ background: '#FAF8FD' }}>
+    <nav className="fixed bottom-0 left-0 right-0 z-40 border-t border-border flex bg-card/95 backdrop-blur-md">
       {mobileNavTabs.map(tab => {
         const active = currentView === tab.id;
         return (
           <button key={tab.id} onClick={() => setCurrentView(tab.id)} className="flex-1 flex flex-col items-center justify-center py-2 gap-0.5">
-            <tab.icon className="w-5 h-5" style={{ color: active ? '#ED498C' : '#94a3b8' }} />
-            <span className="text-[10px] font-bold" style={{ color: active ? '#ED498C' : '#94a3b8' }}>{tab.label}</span>
-            {active && <div className="w-4 h-0.5 rounded-full mt-0.5" style={{ background: '#ED498C' }} />}
+            <tab.icon className={`w-5 h-5 transition-colors ${active ? 'text-primary' : 'text-muted-foreground'}`} />
+            <span className={`text-[10px] font-bold transition-colors ${active ? 'text-primary' : 'text-muted-foreground'}`}>{tab.label}</span>
+            {active && <div className="w-4 h-0.5 rounded-full mt-0.5 bg-primary" />}
           </button>
         );
       })}
@@ -3185,19 +3288,31 @@ function MobileBottomNav({ currentView, setCurrentView }: { currentView: string;
 }
 
 // ─── Sidebar ─────────────────────────────────────────────────────────────────
-function Sidebar({ currentView, setCurrentView, onLogout }: { currentView: string; setCurrentView: (v: string) => void; onLogout: () => void }) {
+function Sidebar({
+  currentView,
+  setCurrentView,
+  onLogout,
+  theme,
+  onToggleTheme,
+}: {
+  currentView: string;
+  setCurrentView: (v: string) => void;
+  onLogout: () => void;
+  theme: 'light' | 'dark';
+  onToggleTheme: () => void;
+}) {
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({});
   const toggle = (id: string) => setOpenSections(prev => ({ ...prev, [id]: !prev[id] }));
 
   return (
-    <aside className="w-64 bg-sidebar border-r border-border flex flex-col h-screen sticky top-0 flex-shrink-0">
-      <div className="p-5 border-b border-border">
+    <aside className="w-64 bg-sidebar border-r border-sidebar-border flex flex-col h-screen sticky top-0 flex-shrink-0">
+      <div className="p-5 border-b border-sidebar-border">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 bg-primary rounded-xl flex items-center justify-center flex-shrink-0">
+          <div className="w-9 h-9 bg-primary rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm shadow-primary/20">
             <SBag className="w-5 h-5 text-white" />
           </div>
           <div>
-            <p className="font-black text-sm text-foreground leading-none">PRIGMA</p>
+            <p className="font-black text-sm text-sidebar-foreground leading-none">PRIGMA</p>
             <p className="text-xs text-muted-foreground">Variedades Carito</p>
           </div>
         </div>
@@ -3206,15 +3321,15 @@ function Sidebar({ currentView, setCurrentView, onLogout }: { currentView: strin
         {navItems.map(section => (
           <div key={section.id}>
             <button onClick={() => toggle(section.id)} className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-muted transition-colors text-left group">
-              <section.icon className="w-4 h-4 text-muted-foreground group-hover:text-foreground flex-shrink-0" />
-              <span className="flex-1 text-xs font-black text-muted-foreground group-hover:text-foreground uppercase tracking-wide">{section.label}</span>
+              <section.icon className="w-4 h-4 text-muted-foreground group-hover:text-sidebar-foreground flex-shrink-0" />
+              <span className="flex-1 text-xs font-black text-muted-foreground group-hover:text-sidebar-foreground uppercase tracking-wide">{section.label}</span>
               {openSections[section.id] ? <ChevronDown className="w-3 h-3 text-muted-foreground" /> : <ChevronRight className="w-3 h-3 text-muted-foreground" />}
             </button>
             {openSections[section.id] && section.children && (
-              <div className="ml-3 mt-1 space-y-0.5 pl-3 border-l-2 border-border">
+              <div className="ml-3 mt-1 space-y-0.5 pl-3 border-l-2 border-sidebar-border">
                 {section.children.map(child => (
                   <button key={child.id} onClick={() => setCurrentView(child.id)}
-                    className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl transition-all text-left ${currentView === child.id ? 'bg-sidebar-accent text-sidebar-accent-foreground font-black' : 'text-muted-foreground hover:bg-muted hover:text-foreground font-bold'}`}>
+                    className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl transition-all text-left ${currentView === child.id ? 'bg-sidebar-accent text-sidebar-accent-foreground font-black' : 'text-muted-foreground hover:bg-muted hover:text-sidebar-foreground font-bold'}`}>
                     <child.icon className="w-3.5 h-3.5 flex-shrink-0" />
                     <span className="text-xs">{child.label}</span>
                     {currentView === child.id && <ArrowUpRight className="w-3 h-3 ml-auto" />}
@@ -3225,14 +3340,18 @@ function Sidebar({ currentView, setCurrentView, onLogout }: { currentView: strin
           </div>
         ))}
       </nav>
-      <div className="p-3 border-t border-border">
-        <div className="flex items-center gap-2.5 px-3 py-2">
+      <div className="p-3 border-t border-sidebar-border flex flex-col gap-2">
+        <div className="flex items-center justify-between px-3 py-1 bg-muted/30 rounded-xl">
+          <span className="text-[11px] font-bold text-muted-foreground">Tema:</span>
+          <ThemeToggle theme={theme} onToggle={onToggleTheme} size="sm" />
+        </div>
+        <div className="flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-muted/40 transition-colors">
           <Av name="Admin Principal" size="sm" />
           <div className="flex-1 min-w-0">
-            <p className="text-xs font-black truncate">Admin Principal</p>
+            <p className="text-xs font-black truncate text-sidebar-foreground">Admin Principal</p>
             <p className="text-[10px] text-muted-foreground">Administrador</p>
           </div>
-          <button onClick={onLogout} title="Cerrar sesión" className="w-7 h-7 rounded-lg hover:bg-muted flex items-center justify-center text-muted-foreground"><LogOut className="w-3.5 h-3.5" /></button>
+          <button onClick={onLogout} title="Cerrar sesión" className="w-7 h-7 rounded-lg hover:bg-muted flex items-center justify-center text-muted-foreground hover:text-destructive transition-colors"><LogOut className="w-3.5 h-3.5" /></button>
         </div>
       </div>
     </aside>
@@ -3248,6 +3367,19 @@ export default function App() {
   const [currentView, setCurrentView]         = useState('dashboard-main');
   const [toasts, setToasts]                   = useState<ToastItem[]>([]);
   const toastCounter                          = useRef(0);
+  const [theme, setTheme]                     = useLocalStorage<'light' | 'dark'>('prigma_theme', 'light');
+
+  useEffect(() => {
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(t => (t === 'dark' ? 'light' : 'dark'));
+  };
 
   _addToast = (msg, type = 'success') => {
     const id = ++toastCounter.current;
@@ -3308,7 +3440,7 @@ export default function App() {
   if (!isLoggedIn) {
     return (
       <>
-        <LoginScreen onLogin={() => setIsLoggedIn(true)} />
+        <LoginScreen onLogin={() => setIsLoggedIn(true)} theme={theme} onToggleTheme={toggleTheme} />
         <ToastContainer toasts={toasts} />
       </>
     );
@@ -3318,7 +3450,7 @@ export default function App() {
   if (isMobile) {
     return (
       <div className="min-h-screen bg-background font-sans">
-        <MobileHeader viewId={currentView} onLogout={() => setIsLoggedIn(false)} />
+        <MobileHeader viewId={currentView} onLogout={() => setIsLoggedIn(false)} theme={theme} onToggleTheme={toggleTheme} />
         <main className="pt-14 pb-20 px-4 overflow-auto min-h-screen">
           {renderView()}
         </main>
@@ -3331,9 +3463,9 @@ export default function App() {
   // ── Desktop layout ─────────────────────────────────────────────────────────
   return (
     <div className="flex min-h-screen bg-background font-sans">
-      <Sidebar currentView={currentView} setCurrentView={setCurrentView} onLogout={() => setIsLoggedIn(false)} />
+      <Sidebar currentView={currentView} setCurrentView={setCurrentView} onLogout={() => setIsLoggedIn(false)} theme={theme} onToggleTheme={toggleTheme} />
       <main className="flex-1 flex flex-col min-w-0">
-        <header className="h-14 border-b border-border bg-card px-6 flex items-center justify-between flex-shrink-0 sticky top-0 z-30">
+        <header className="h-14 border-b border-border bg-card px-6 flex items-center justify-between flex-shrink-0 sticky top-0 z-30 transition-colors">
           <div className="flex items-center gap-2 text-xs text-muted-foreground">
             <span>{viewMeta[currentView] || 'PRIGMA'}</span>
             <ChevronRight className="w-3 h-3" />
@@ -3341,8 +3473,10 @@ export default function App() {
               {navItems.flatMap(n => n.children || []).find(c => c.id === currentView)?.label || currentView}
             </span>
           </div>
-          <div className="flex items-center gap-2">
-            <button className="w-8 h-8 rounded-xl hover:bg-muted flex items-center justify-center text-muted-foreground relative">
+          <div className="flex items-center gap-3">
+            {/* Always visible theme toggle button */}
+            <ThemeToggle theme={theme} onToggle={toggleTheme} />
+            <button className="w-8 h-8 rounded-xl hover:bg-muted flex items-center justify-center text-muted-foreground relative transition-colors">
               <Bell className="w-4 h-4" />
               <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-primary rounded-full" />
             </button>
